@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+
+{% block form_buttons_header %}
+{% endblock form_buttons_header %}
+
+
+{% block content %}
+{% include 'layer_front/popup/place_inside_popup.html' %}
+{% endblock content %}
+
+
+{% block form_buttons_footer %}
+{% endblock form_buttons_footer %}
+
+
+{% block modal %}
+{% endblock modal %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={{ maps_key }}&lang=ru_RU" type="text/javascript"></script>
+    <script src="{% static 'layer_front/js/places.js' %}" type="text/javascript"></script>
+{% endblock js %}

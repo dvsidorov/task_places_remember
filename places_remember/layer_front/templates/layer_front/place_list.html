@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% csrf_token %}
+<table id="tech-companies-1" class="table  table-striped">
+    <thead>
+        <tr>
+            <th data-priority="0">Название</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in place_list %}
+        <tr>
+            <td>{{ obj.name }}</td>
+            <td>
+                <div class="">
+                    <a data-place_id="{{ obj.pk }}" class="place-update-link" href="#">
+                        <i class=""></i>
+                    </a>
+                </div>
+                <div class="">
+                    <a data-place_id="{{ obj.pk }}" class="place-delete-link" href="#">
+                        <i class=""></i>
+                    </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+
+
+{% block modal %}
+{% endblock modal %}
+
+
+{% block css %}
+    {{ block.super }}
+{% endblock css %}
+
+
+{% block js %}
+{% endblock js %}

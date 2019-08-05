@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tbody">
+
+            <form class="place-form" action="." method="post"
+                    data-place_form="{{ place_form.field_order }}" data-action="{{ action }}" data-place_id="{{ place_id }}"
+            >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card m-b-20">
+                            <div class="card-block">
+
+                                <h4 class="mt-0 header-title">
+                                    <span id="main-form"> &nbsp; </span>
+                                    Добавление места воспоминаний
+                                </h4>
+
+                                {% for field in place_form %}
+                                    {% if field.field.widget.is_hidden %}
+                                    {% include 'components/input/hidden.html' %}
+                                    {% else %}
+                                    {% include 'components/input/sample.html' %}
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
+            </form>
+
+            <div id="map" style="width: 600px; height: 400px">
+
+            </div>
+
+            <button type="submit" class="">
+                Сохранить
+            </button>
+
+        </div>
+    </div>
+</div>

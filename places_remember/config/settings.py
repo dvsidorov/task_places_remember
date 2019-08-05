@@ -30,7 +30,7 @@ SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
 
@@ -155,3 +155,5 @@ STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+
+YANDEX_MAPS_KEY = None
