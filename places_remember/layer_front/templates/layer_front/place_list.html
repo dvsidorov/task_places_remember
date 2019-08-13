@@ -35,6 +35,26 @@
 
 
 {% block modal %}
+    <!-- Modal -->
+    <div class="modal fade" id="place-delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-custom">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Подтверждение удаления объекта</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Вы действительно хотите удалить данный объект?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn waves-effect m-l-5 modal-button-abort" data-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn modal-button-submit btn-pink waves-effect waves-light">Подтверждаю</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock modal %}
 
 

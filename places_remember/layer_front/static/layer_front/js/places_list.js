@@ -84,7 +84,7 @@ window.options = window.options || {};
         var channel_node = new bus.ChannelNode ();
         var data_storage = new bus.DataHtmlStorage();
 
-        var place_physical_list = new bus.PlacesList({
+        var place_list = new bus.PlacesList({
             '_place_update_link': '.place-update-link',
             '_place_delete_link': '.place-delete-link',
             '_url_base': '/place/',

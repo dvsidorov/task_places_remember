@@ -77,6 +77,13 @@ class PlaceBaseViewMixin:
         options = self._set_form_attr(data=data, initial=initial, readonly=readonly)
         self.place_form = PlaceForm(**options)
 
+    @staticmethod
+    def _read_place(place_id):
+        data = None
+        if place_id:
+            data = PlacesBL.read(place_id=place_id)
+        return data
+
 
 class PlaceCreateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
 
@@ -126,15 +133,16 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
     template_popup = {}
     data_popup = {}
     context_processors = []
-    template_name = 'place/place_inside.html'
+    template_name = 'layer_front/place_inside.html'
     redirect_uri = '/place/list/'
+    action = 'update'
 
     kwargs_params_slots = {
         'place_id': [None, None],
     }
 
     request_params_slots = {
-        'data': [None, None],
+        'place_data': [None, None],
     }
 
     def __init__(self, *args, **kwargs):
@@ -144,6 +152,7 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
             'maps_key': None
         }
         self.place_form = None
+        self.place_id = None
         super().__init__(*args, **kwargs)
 
     def _render_popup_response(self, data=None):
@@ -154,7 +163,10 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
         pass
 
     def get(self, *args, **kwargs):
-        self._set_place_form(data=(self.params_storage['data'] or {}))
+        data = self._read_place(self.params_storage['place_id'])
+        self.place_id = data.get('place_id')
+
+        self._set_place_form(initial=data)
         self._aggregate()
         return self._render()
 
@@ -172,7 +184,7 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
     }
 
     request_params_slots = {
-        'data': [None, None],
+        'place_data': [None, None],
     }
 
     def __init__(self, *args, **kwargs):
@@ -191,6 +203,7 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
         pass
 
     def get(self, *args, **kwargs):
+
         self._aggregate()
         return self._render()
 
