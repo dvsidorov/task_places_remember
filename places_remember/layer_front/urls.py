@@ -15,12 +15,16 @@ Including another URLconf
 """
 
 
-from django.conf.urls import url
-from .places import PlaceCreateView, PlaceListView
+from django.conf.urls import url, include
+from .views import PlaceCreateView, PlaceListView, LoginView
 
 
 urlpatterns = [
-    url(r'^place/list/$', PlaceListView.as_view(), name='place_list'),
-    url(r'^place/create/$', PlaceCreateView.as_view(), name='place_create'),
-    url(r'^place/create/popup/$', PlaceCreateView.as_view(popup=True), name='place_create_popup')
+    url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^create/$', PlaceCreateView.as_view(), name='place_create'),
+    url(r'^create/popup/$', PlaceCreateView.as_view(popup=True), name='place_create_popup'),
+    url(r'^$', PlaceListView.as_view(), name='place_list'),
+    url(r'', include('social_django.urls', namespace='social')),
 ]
+
+
