@@ -3,35 +3,17 @@
 
 import json
 
-from django import forms
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from leon_base.base.views import BaseView
-from layer_front.base import BaseForm, field_factory
+from layer_front.forms import PlaceForm
 from layer_business.places import PlacesBL
 
 
-class PlaceForm(BaseForm):
+class LoginViewMixin(LoginRequiredMixin):
 
-    name = field_factory(forms.CharField(label='Название',
-                                         required=True,
-                                         widget=forms.TextInput(attrs={'class': 'form-control',
-                                                                       'placeholder': 'Введите название места'}),
-                                         error_messages={'required': "Введите название места"}),
-                         'text')
-    comment = field_factory(forms.CharField(label='Комментарий',
-                                            required=False,
-                                            widget=forms.Textarea(attrs={'class': 'form-control',
-                                                                         'placeholder': 'Введите комментарий'}),
-                                            error_messages={'required': "Введите комментарий"}),
-                            'text')
-    latitude = forms.CharField(label='Широта',
-                               required=True,
-                               widget=forms.HiddenInput)
-    longitude = forms.CharField(label='Долгота',
-                                required=True,
-                                widget=forms.HiddenInput)
-
-    field_order = ['name', 'comment', 'latitude', 'longitude']
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
 
 
 class PlaceValidatorMixin:
@@ -85,7 +67,7 @@ class PlaceBaseViewMixin:
         return data
 
 
-class PlaceCreateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
+class PlaceCreateView(LoginRequiredMixin, BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
 
     template_popup = {}
     data_popup = {}
@@ -208,7 +190,7 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
         return self._render()
 
 
-class PlaceListView(BaseView, PlaceValidatorMixin):
+class PlaceListView(LoginViewMixin, BaseView, PlaceValidatorMixin):
 
     template_popup = {}
     data_popup = {}
@@ -239,5 +221,28 @@ class PlaceListView(BaseView, PlaceValidatorMixin):
 
     def get(self, *args, **kwargs):
         self._set_place_list()
+        self._aggregate()
+        return self._render()
+
+
+class LoginView(BaseView):
+
+    template_popup = {}
+    data_popup = {}
+    context_processors = []
+    template_name = 'layer_front/login.html'
+
+    kwargs_params_slots = {}
+
+    request_params_slots = {}
+
+    def __init__(self, *args, **kwargs):
+        self.params_storage = {}
+        self.output_context = {
+        }
+        self.place_form = None
+        super().__init__(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
         self._aggregate()
         return self._render()

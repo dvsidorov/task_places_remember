@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django.contrib.flatpages',
     'django.contrib.postgres',
+    'social_core',
+    'social_django',
 
     'layer_front',
     'layer_model',
@@ -157,3 +159,20 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
 YANDEX_MAPS_KEY = None
+
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_FACEBOOK_KEY = ''
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'ru_RU',
+  'fields': 'id, name, email, age_range'
+}
+
+LOGIN_REDIRECT_URL = '/'
