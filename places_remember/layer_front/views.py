@@ -5,6 +5,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import HttpResponseRedirect, redirect
 from leon_base.base.views import BaseView
 from layer_front.forms import PlaceForm
 from layer_business.places import PlacesBL
@@ -246,3 +247,26 @@ class LoginView(BaseView):
     def get(self, *args, **kwargs):
         self._aggregate()
         return self._render()
+
+
+class LogoutView(BaseView):
+
+    template_popup = {}
+    data_popup = {}
+    context_processors = []
+    kwargs_params_slots = {}
+    request_params_slots = {}
+
+    def __init__(self, *args, **kwargs):
+        self.params_storage = {}
+        self.output_context = {
+        }
+        self.place_form = None
+        super().__init__(*args, **kwargs)
+
+    def _clean_session(self):
+        self.request.session.flush()
+
+    def get(self, *args, **kwargs):
+        self._clean_session()
+        return redirect('place_list')

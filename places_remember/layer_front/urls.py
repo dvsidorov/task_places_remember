@@ -16,11 +16,12 @@ Including another URLconf
 
 
 from django.conf.urls import url, include
-from .views import PlaceCreateView, PlaceListView, LoginView
+from .views import PlaceCreateView, PlaceListView, LoginView, LogoutView
 
 
 urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^create/$', PlaceCreateView.as_view(), name='place_create'),
     url(r'^create/popup/$', PlaceCreateView.as_view(popup=True), name='place_create_popup'),
     url(r'^$', PlaceListView.as_view(), name='place_list'),
