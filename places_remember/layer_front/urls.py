@@ -16,14 +16,21 @@ Including another URLconf
 
 
 from django.conf.urls import url, include
-from .views import PlaceCreateView, PlaceListView, LoginView, LogoutView
+from .views import PlaceCreateView, PlaceUpdateView, PlaceDeleteView, PlaceListView, LoginView, LogoutView
 
 
 urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
-    url(r'^create/$', PlaceCreateView.as_view(), name='place_create'),
+
     url(r'^create/popup/$', PlaceCreateView.as_view(popup=True), name='place_create_popup'),
+    url(r'^create/$', PlaceCreateView.as_view(), name='place_create'),
+
+    url(r'^update/popup/(?P<place_id>.*)/$', PlaceUpdateView.as_view(popup=True), name='place_update_popup'),
+    url(r'^update/(?P<place_id>.*)/$', PlaceUpdateView.as_view(), name='place_update'),
+
+    url(r'^delete/popup/(?P<place_id>.*)/$', PlaceDeleteView.as_view(popup=True), name='place_delete_popup'),
+
     url(r'^$', PlaceListView.as_view(), name='place_list'),
     url(r'', include('social_django.urls', namespace='social')),
 ]

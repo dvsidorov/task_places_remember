@@ -45,10 +45,10 @@ window.options = window.options || {};
 
         this.handlerSubmit = function (event, target) {
             var place_form_data = this.getFormData(this._place_form);
-            console.log(place_form_data);
             var action = this.get_action();
             var place_id = this.get_place_id();
             var url = this.get_url(action, place_id);
+            console.log(place_form_data, action, place_id);
             $.ajax(
                 {
                     context: this,
@@ -116,6 +116,7 @@ window.options = window.options || {};
         };
 
         this.get_url = function (action, place_id) {
+            console.log(action, place_id);
             var url =  this._url_base + action + '/popup/';
             if (place_id) {
                 url = url + place_id + '/';
@@ -135,7 +136,7 @@ window.options = window.options || {};
             '_form': 'form',
             '_submit_button': 'button[type="submit"]',
             '_csrf_token': 'input[name=csrfmiddlewaretoken]',
-            '_url_base': '/place/',
+            '_url_base': '/',
             '_form_tbody': '.tbody',
 
             '_place_form': '.place-form',

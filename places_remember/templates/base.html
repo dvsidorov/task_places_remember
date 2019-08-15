@@ -22,9 +22,19 @@
 
         <!-- Navigation Bar-->
         <header>
+        {% block header %}
+            <div class="container">
+                <div class="row">
+                    Добро пожаловать, {{ request.user.first_name }} {{ request.user.last_name }}
+                </div>
+            </div>
+            <a href="/logout/">
+                <input type="button" value="Выйти">
+            </a>
+            </div>
+        {% endblock header %}
         </header>
         <!-- End Navigation Bar-->
-
 
         {% block form_buttons_header %}
         {% endblock form_buttons_header %}

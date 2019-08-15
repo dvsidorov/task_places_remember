@@ -87,7 +87,7 @@ window.options = window.options || {};
         var place_list = new bus.PlacesList({
             '_place_update_link': '.place-update-link',
             '_place_delete_link': '.place-delete-link',
-            '_url_base': '/place/',
+            '_url_base': '',
             '_place_delete_modal': '#place-delete-modal',
             '_place_delete_modal_button': '.modal-button-submit',
             '_csrf_token': 'input[name=csrfmiddlewaretoken]'

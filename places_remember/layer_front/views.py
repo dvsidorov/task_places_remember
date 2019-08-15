@@ -117,7 +117,7 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
     data_popup = {}
     context_processors = []
     template_name = 'layer_front/place_inside.html'
-    redirect_uri = '/place/list/'
+    redirect_uri = '/'
     action = 'update'
 
     kwargs_params_slots = {
@@ -132,7 +132,8 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
         self.params_storage = {}
         self.output_context = {
             'place_form': None,
-            'maps_key': None
+            'action': None,
+            'place_id': None,
         }
         self.place_form = None
         self.place_id = None
@@ -143,7 +144,15 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
         return self._render()
 
     def post(self, *args, **kwargs):
-        pass
+        data = self._read_place(self.params_storage['place_id'])
+        self.place_id = data.get('place_id')
+        self._set_place_form(data=(self.params_storage['place_data'] or {}), initial=data, readonly=False)
+
+        if self._validate_form([self.place_form]):
+            place = self._form_data_to_dict(self.place_form)
+            PlacesBL.update(place_id=self.place_id,
+                            place=place)
+            return self._render_popup_response(data={'status': 302, 'redirect_uri': self.redirect_uri})
 
     def get(self, *args, **kwargs):
         data = self._read_place(self.params_storage['place_id'])
@@ -182,13 +191,14 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
         self.data_popup = data or {}
         return self._render()
 
+    @staticmethod
+    def _remove_place(place_id):
+        return PlacesBL.remove(place_id=place_id)
+
     def post(self, *args, **kwargs):
-        pass
-
-    def get(self, *args, **kwargs):
-
-        self._aggregate()
-        return self._render()
+        if self._remove_place(self.params_storage['place_id']):
+            return self._render_popup_response(data={'status': 302, 'redirect_uri': self.redirect_uri})
+        return self._render_popup_response(data={'status': 400})
 
 
 class PlaceListView(LoginViewMixin, BaseView, PlaceValidatorMixin):
@@ -205,7 +215,8 @@ class PlaceListView(LoginViewMixin, BaseView, PlaceValidatorMixin):
     def __init__(self, *args, **kwargs):
         self.params_storage = {}
         self.output_context = {
-            'place_list': None
+            'place_list': None,
+            'request': None,
         }
         self.place_form = None
         super().__init__(*args, **kwargs)
