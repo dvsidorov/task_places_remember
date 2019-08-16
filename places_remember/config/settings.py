@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
+import django_heroku
 
 
 SITE_ROOT = os.path.realpath(os.path.curdir)
+BASE_DIR = os.path.realpath(os.path.curdir)
 sys.path.insert(0, os.path.join(SITE_ROOT, 'apps'))
 sys.path.insert(0, os.path.join(SITE_ROOT, 'external'))
 
@@ -176,3 +178,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())

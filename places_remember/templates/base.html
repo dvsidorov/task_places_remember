@@ -7,6 +7,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <link rel="shortcut icon" href={% static 'images/favicon.ico' %} type="image/png">
+
         {% block css %}
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href={% static 'layer_front/css/bootstrap.css' %}>
@@ -26,7 +28,7 @@
             <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-light pl-5 pr-5">
                 {% block add_place %}
                 <a class="float-left" href="/create/">
-                    <input type="button" class="btn btn-primary" value="Добавить место">
+                    <input type="button" class="btn btn-primary" value="Добавить воспоминание">
                 </a>
                 {% endblock add_place %}
                 <div class="ml-auto mr-5">
