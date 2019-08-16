@@ -16,9 +16,9 @@ import sys
 import django_heroku
 
 
-SITE_ROOT = os.path.realpath(os.path.curdir)
-BASE_DIR = os.path.realpath(os.path.curdir)
-sys.path.insert(0, os.path.join(SITE_ROOT, 'apps'))
+SITE_ROOT = os.path.join(os.path.dirname(__file__), '..')
+BASE_DIR = SITE_ROOT
+sys.path.insert(0, SITE_ROOT)
 sys.path.insert(0, os.path.join(SITE_ROOT, 'external'))
 
 
@@ -74,7 +74,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'templates'
+            'templates',
+            'places_remember/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -160,7 +161,8 @@ STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
-YANDEX_MAPS_KEY = None
+
+YANDEX_MAPS_KEY = os.getenv('YANDEX_MAPS_KEY', '')
 
 
 AUTHENTICATION_BACKENDS = (
@@ -169,8 +171,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_FACEBOOK_KEY = ''
-SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY', '')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET', '')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'ru_RU',
