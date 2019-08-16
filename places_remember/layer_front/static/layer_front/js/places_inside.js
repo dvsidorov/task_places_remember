@@ -10,13 +10,16 @@ window.options = window.options || {};
         }
 
         this.initialize = function () {
+            if (this.get_action() === "update") {
+                this.initCoords();
+            }
             this.initMaps();
             this.initCoordAdd();
             this.initSubmit();
         };
 
         this.initialize_popup = function () {
-            this.initMaps();
+            this.initCoordAdd();
         };
 
         this.initSubmit = function () {
@@ -25,6 +28,10 @@ window.options = window.options || {};
 
         this.initCoordAdd = function () {
             this.bindMsg(this._place_form, 'map_click', this.handlerCoordAdd, true);
+        };
+
+        this.initCoords = function () {
+            this.coords = [$(this._place_latitude_field).val(), $(this._place_longitude_field).val()];
         };
 
         this.handlerCoordAdd = function (event, target) {
@@ -64,7 +71,7 @@ window.options = window.options || {};
                             window.location.href = res['redirect_uri'];
                         }
                         else {
-                            $(this._form_tbody).html(res['tbody']);
+                            $(this._form_tbody).parent().html(res['tbody']);
                             this.initialize_popup();
                         }
                     },
@@ -90,14 +97,18 @@ window.options = window.options || {};
                     // Порядок по умолчанию: «широта, долгота».
                     // Чтобы не определять координаты центра карты вручную,
                     // воспользуйтесь инструментом Определение координат.
-                    center: [55.76, 37.64],
+                    center: obj.coords,
                     // Уровень масштабирования. Допустимые значения:
                     // от 0 (весь мир) до 19.
-                    zoom: 7
+                    zoom: 10
                 });
+                myMap.geoObjects.add(new ymaps.Placemark([obj.coords[0], obj.coords[1]], {}, {}));
 
                 myMap.events.add('click', function (e) {
                     obj.coords = e.get('coords');
+                    var geoobj = myMap.geoObjects.get(0);
+                    myMap.geoObjects.remove(geoobj);
+                    myMap.geoObjects.add(new ymaps.Placemark([obj.coords[0], obj.coords[1]], {}, {}));
                     obj.publishMsg([obj._place_form], 'map_click');
                 });
             }

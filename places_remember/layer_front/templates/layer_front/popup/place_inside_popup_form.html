@@ -1,0 +1,16 @@
+<form class="place-form" action="." method="post"
+        data-place_form="{{ place_form.field_order }}" data-action="{{ action }}" data-place_id="{{ place_id }}"
+>
+    {% csrf_token %}
+    <h4 class="header-title">
+        Добавление места воспоминаний
+    </h4>
+
+    {% for field in place_form %}
+        {% if field.field.widget.is_hidden %}
+        {% include 'components/input/hidden.html' %}
+        {% else %}
+        {% include 'components/input/sample.html' %}
+        {% endif %}
+    {% endfor %}
+</form>

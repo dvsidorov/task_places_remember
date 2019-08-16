@@ -4,32 +4,37 @@
 
 {% block content %}
 {% csrf_token %}
-<table id="" class="table  table-striped">
-    <thead>
-        <tr>
-            <th data-priority="0">Название</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for obj in place_list %}
-        <tr>
-            <td>{{ obj.name }}</td>
-            <td>
-                <div class="">
-                    <a data-place_id="{{ obj.pk }}" class="place-update-link" href="#">
-                        <i class="fa fa-edit" style="font-size:50px;color: black"></i>
-                    </a>
-                </div>
-                <div class="">
-                    <a data-place_id="{{ obj.pk }}" class="place-delete-link" href="#">
-                        <i class="fa fa-trash" style="font-size:50px;color: black"></i>
-                    </a>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th data-priority="0">Название</th>
+                        <th data-priority="1">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in place_list %}
+                    <tr>
+                        <td>{{ obj.name }}</td>
+                        <td>
+                            <div class="">
+                                <a data-place_id="{{ obj.pk }}" class="place-update-link mr-3" href="#">
+                                    <i class="fa fa-edit" style="font-size:25px;color: black"></i>
+                                </a>
+                                <a data-place_id="{{ obj.pk }}" class="place-delete-link" href="#">
+                                    <i class="fa fa-trash" style="font-size:25px;color: black"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
 

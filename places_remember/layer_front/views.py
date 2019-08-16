@@ -70,11 +70,13 @@ class PlaceBaseViewMixin:
 
 class PlaceCreateView(LoginRequiredMixin, BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
 
-    template_popup = {}
+    template_popup = {
+        'tbody': 'layer_front/popup/place_inside_popup_form.html'
+    }
     data_popup = {}
     context_processors = []
     template_name = 'layer_front/place_inside.html'
-    redirect_uri = '/place/list/'
+    redirect_uri = '/'
     action = 'create'
 
     kwargs_params_slots = {}
@@ -113,7 +115,9 @@ class PlaceCreateView(LoginRequiredMixin, BaseView, PlaceBaseViewMixin, PlaceVal
 
 class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
 
-    template_popup = {}
+    template_popup = {
+        'tbody': 'layer_front/popup/place_inside_popup_form.html'
+    }
     data_popup = {}
     context_processors = []
     template_name = 'layer_front/place_inside.html'
@@ -147,12 +151,13 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
         data = self._read_place(self.params_storage['place_id'])
         self.place_id = data.get('place_id')
         self._set_place_form(data=(self.params_storage['place_data'] or {}), initial=data, readonly=False)
-
         if self._validate_form([self.place_form]):
             place = self._form_data_to_dict(self.place_form)
             PlacesBL.update(place_id=self.place_id,
                             place=place)
             return self._render_popup_response(data={'status': 302, 'redirect_uri': self.redirect_uri})
+        self._aggregate()
+        return self._render()
 
     def get(self, *args, **kwargs):
         data = self._read_place(self.params_storage['place_id'])
@@ -169,7 +174,7 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
     data_popup = {}
     context_processors = []
     template_name = 'place/place_inside.html'
-    redirect_uri = '/place/list/'
+    redirect_uri = '/'
 
     kwargs_params_slots = {
         'place_id': [None, None],

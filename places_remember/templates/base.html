@@ -23,10 +23,12 @@
         <!-- Navigation Bar-->
         <header>
         {% block header %}
-            <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-light">
+            <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-light pl-5 pr-5">
+                {% block add_place %}
                 <a class="float-left" href="/create/">
                     <input type="button" class="btn btn-primary" value="Добавить место">
                 </a>
+                {% endblock add_place %}
                 <div class="ml-auto mr-5">
                     Добро пожаловать, {{ request.user.first_name }} {{ request.user.last_name }}
                 </div>
