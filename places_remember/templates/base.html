@@ -23,12 +23,15 @@
         <!-- Navigation Bar-->
         <header>
         {% block header %}
-            <nav class="navbar fixed-top navbar-light bg-light">
-                <div>
+            <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-light">
+                <a class="float-left" href="/create/">
+                    <input type="button" class="btn btn-primary" value="Добавить место">
+                </a>
+                <div class="ml-auto mr-5">
                     Добро пожаловать, {{ request.user.first_name }} {{ request.user.last_name }}
                 </div>
-                <a class="navbar-brand" href="/logout/">
-                    <input type="button" value="Выйти">
+                <a class="" href="/logout/">
+                    <input type="button" class="btn btn-primary" value="Выйти">
                 </a>
             </nav>
         {% endblock header %}
@@ -38,8 +41,10 @@
         {% block form_buttons_header %}
         {% endblock form_buttons_header %}
 
+        <div style="margin-top: 100px">
         {% block content %}
         {% endblock content %}
+        </div>
 
         {% endblock body %}
 

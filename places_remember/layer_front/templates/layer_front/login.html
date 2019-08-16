@@ -7,11 +7,11 @@
 
 
 {% block content %}
-    <div class="container">
-        <div class="row">
+    <div class="container " style="height: 100vh; text-align: center">
+        <div class="row h-100">
             <div class="col-md-12 align-self-center">
                 <a href="{% url "social:begin" "facebook" %}">
-                    <input type="button" value="Авторизоваться">
+                    <input type="button" class="btn btn-primary" value="Авторизоваться">
                 </a>
             </div>
         </div>
