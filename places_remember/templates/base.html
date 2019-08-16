@@ -23,15 +23,14 @@
         <!-- Navigation Bar-->
         <header>
         {% block header %}
-            <div class="container">
-                <div class="row">
+            <nav class="navbar fixed-top navbar-light bg-light">
+                <div>
                     Добро пожаловать, {{ request.user.first_name }} {{ request.user.last_name }}
                 </div>
-            </div>
-            <a href="/logout/">
-                <input type="button" value="Выйти">
-            </a>
-            </div>
+                <a class="navbar-brand" href="/logout/">
+                    <input type="button" value="Выйти">
+                </a>
+            </nav>
         {% endblock header %}
         </header>
         <!-- End Navigation Bar-->
@@ -39,16 +38,8 @@
         {% block form_buttons_header %}
         {% endblock form_buttons_header %}
 
-        <div class="wrapper">
-            <div class="container">
-
-            {% block content %}
-            {% endblock content %}
-
-            </div>
-            <!-- end container -->
-        </div>
-        <!-- end wrapper -->
+        {% block content %}
+        {% endblock content %}
 
         {% endblock body %}
 
