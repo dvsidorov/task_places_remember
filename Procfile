@@ -1,0 +1,1 @@
+web: gunicorn places_remember.config.wsgi --log-file -
