@@ -60,11 +60,10 @@ class PlaceBaseViewMixin:
         options = self._set_form_attr(data=data, initial=initial, readonly=readonly)
         self.place_form = PlaceForm(**options)
 
-    @staticmethod
-    def _read_place(place_id):
+    def _read_place(self, place_id):
         data = None
         if place_id:
-            data = PlacesBL.read(place_id=place_id)
+            data = PlacesBL.read(place_id=place_id, user_id=self.request.user.pk)
         return data
 
 
@@ -102,7 +101,7 @@ class PlaceCreateView(LoginRequiredMixin, BaseView, PlaceBaseViewMixin, PlaceVal
         self._set_place_form(data=(self.params_storage['place_data'] or {}))
         if self._validate_form([self.place_form]):
             place = self._form_data_to_dict(self.place_form)
-            PlacesBL.create(**place)
+            PlacesBL.create(user_id=self.request.user.pk, **place)
             return self._render_popup_response(data={'status': 302, 'redirect_uri': self.redirect_uri})
         self._aggregate()
         return self._render()
@@ -154,6 +153,7 @@ class PlaceUpdateView(BaseView, PlaceBaseViewMixin, PlaceValidatorMixin):
         if self._validate_form([self.place_form]):
             place = self._form_data_to_dict(self.place_form)
             PlacesBL.update(place_id=self.place_id,
+                            user_id=self.request.user.pk,
                             place=place)
             return self._render_popup_response(data={'status': 302, 'redirect_uri': self.redirect_uri})
         self._aggregate()
@@ -196,9 +196,8 @@ class PlaceDeleteView(BaseView, PlaceValidatorMixin):
         self.data_popup = data or {}
         return self._render()
 
-    @staticmethod
-    def _remove_place(place_id):
-        return PlacesBL.remove(place_id=place_id)
+    def _remove_place(self, place_id):
+        return PlacesBL.remove(place_id=place_id, user_id=self.request.user.pk)
 
     def post(self, *args, **kwargs):
         if self._remove_place(self.params_storage['place_id']):
@@ -231,7 +230,7 @@ class PlaceListView(LoginViewMixin, BaseView, PlaceValidatorMixin):
         return self._render()
 
     def _set_place_list(self):
-        self.place_list = PlacesBL.list()
+        self.place_list = PlacesBL.list(user_id=self.request.user.pk)
 
     def post(self, *args, **kwargs):
         pass

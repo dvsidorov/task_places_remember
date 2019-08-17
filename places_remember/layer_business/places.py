@@ -14,8 +14,8 @@ class PlacesBL(BaseLogicEntity):
         return field_values
 
     @staticmethod
-    def list():
-        return Place.objects.all()
+    def list(user_id):
+        return Place.objects.filter(user_id=user_id).all()
 
     @classmethod
     def create(cls, **place):
@@ -25,17 +25,17 @@ class PlacesBL(BaseLogicEntity):
         return place.pk
 
     @staticmethod
-    def read(place_id):
-        place = Place.objects.filter(place_id=place_id).first()
+    def read(place_id, user_id):
+        place = Place.objects.filter(place_id=place_id, user_id=user_id).first()
         return model_to_dict(place)
 
     @classmethod
-    def update(cls, place_id, place=None):
+    def update(cls, place_id, user_id, place=None):
         place_fields = cls._place_validate(**place)
-        place = Place.objects.filter(place_id=place_id).update(**place_fields)
+        place = Place.objects.filter(place_id=place_id, user_id=user_id).update(**place_fields)
         return place
 
     @classmethod
-    def remove(cls, place_id):
-        Place.objects.filter(place_id=place_id).delete()
+    def remove(cls, place_id, user_id):
+        Place.objects.filter(place_id=place_id, user_id=user_id).delete()
         return True
