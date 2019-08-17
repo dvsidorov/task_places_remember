@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 import sys
 import django_heroku
+import dj_database_url
 
 
 SITE_ROOT = os.path.join(os.path.dirname(__file__), '..')
@@ -107,24 +108,9 @@ DATE_INPUT_FORMATS = ['%Y-%m-%d']
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'plrem',
-#         'USER': 'plrem',
-#         'PASSWORD': None,
-#         'HOST': DB_HOST,
-#         'PORT': '5432',
-#     }
-# }
+DATABASES = {'default': dj_database_url.config(
+    default=os.getenv('DATABASE_URL', 'sqlite:///{}'.format(os.path.join(BASE_DIR, 'db.sqlite3'))))}
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3'
-    }
-}
 
 
 # Password validation

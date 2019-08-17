@@ -7,3 +7,4 @@ git+https://github.com/python-social-auth/social-core.git
 git+https://github.com/python-social-auth/social-app-django
 gunicorn
 django-heroku
+dj-database-url
