@@ -91,21 +91,23 @@ window.options = window.options || {};
             ymaps.ready(init);
 
             function init () {
+
+                obj.coords = obj.coords || [56.8575, 60.6125];
+
                 // Создание карты.
                 var myMap = new ymaps.Map("map", {
                     // Координаты центра карты.
                     // Порядок по умолчанию: «широта, долгота».
                     // Чтобы не определять координаты центра карты вручную,
                     // воспользуйтесь инструментом Определение координат.
-                    center: obj.coords || [56.8575, 60.6125],
+                    center: obj.coords,
                     // Уровень масштабирования. Допустимые значения:
                     // от 0 (весь мир) до 19.
                     zoom: 10
                 });
 
-                if (obj.coords) {
-                    myMap.geoObjects.add(new ymaps.Placemark(obj.coords, {}, {}));
-                }
+                myMap.geoObjects.add(new ymaps.Placemark(obj.coords, {}, {}));
+                obj.publishMsg([obj._place_form], 'map_click');
 
                 myMap.events.add('click', function (e) {
                     obj.coords = e.get('coords');

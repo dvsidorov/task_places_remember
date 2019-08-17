@@ -27,10 +27,15 @@ class PlacesBL(BaseLogicEntity):
     @staticmethod
     def read(place_id, user_id):
         place = Place.objects.filter(place_id=place_id, user_id=user_id).first()
-        return model_to_dict(place)
+        if not place:
+            return None
+        place = model_to_dict(place)
+        place['user_id'] = place['user']
+        del place['user']
+        return place
 
     @classmethod
-    def update(cls, place_id, user_id, place=None):
+    def update(cls, place_id, user_id, **place):
         place_fields = cls._place_validate(**place)
         place = Place.objects.filter(place_id=place_id, user_id=user_id).update(**place_fields)
         return place
