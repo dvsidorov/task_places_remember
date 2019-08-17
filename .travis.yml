@@ -1,11 +1,14 @@
 language: python
 python:
   - "3.7"
-env:
-  - DJANGO_SETTINGS_MODULE=places_remember.config.settings
-# command to install dependencies
+before_install:
+  - export DJANGO_SETTINGS_MODULE=places_remember.config.settings
+  - export PYTHONPATH=/home/travis/build/dvsidorov/task_places_remember/:/home/travis/build/dvsidorov/task_places_remember/places_remember/
+  - export PIP_USE_MIRRORS=true
 install:
   - pip install -r requirements.txt
-# command to run tests
 script:
+  - python places_remember/manage.py makemigrations layer_model && python places_remember/manage.py migrate
   - pytest
+after_success:
+  - coveralls
