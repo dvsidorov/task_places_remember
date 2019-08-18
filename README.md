@@ -15,3 +15,28 @@ Subsequently, he adds other places that are also displayed in the list on the ho
 After the user has added all his recently visited places, he clicks on the “Exit” button, after which he returns to the welcome page of the service and can no longer see the previously entered places.
 
 After a while, he returns to the service, logs in again through FB and sees a list of previously saved months
+
+
+### Installing dependencies
+~~~
+pip install -r requirements --no-cache-dir
+~~~
+
+
+## Built With
+
+* [Django](https://github.com/django/django.git) - The web framework used
+
+
+## Authors
+
+* **Denis Sidorov** - *Initial work* - [dvsidorov](https://github.com/dvsidorov)
+
+
+## Demo (Heroku)
+
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
