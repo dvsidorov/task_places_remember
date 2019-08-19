@@ -32,7 +32,7 @@ SECRET_KEY = '*#$u)zb@*!bhm4)7*43hj(03m$)0+-&j(tk=lqc(ewd80hml9g'
 SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.getenv('DEBUG', 0))
 ALLOWED_HOSTS = ['*']
 
 DB_HOST = os.getenv('DB_HOST', '127.0.0.1')
