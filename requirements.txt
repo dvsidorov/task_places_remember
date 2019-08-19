@@ -9,3 +9,4 @@ gunicorn
 django-heroku
 dj-database-url
 python-coveralls
+pytest-cov

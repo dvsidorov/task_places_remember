@@ -1,5 +1,5 @@
 
-[![Coverage Status](https://coveralls.io/repos/github/dvsidorov/task_places_remember/badge.svg?branch=master)](https://coveralls.io/github/dvsidorov/task_places_remember?branch=master)
+[![Build Status](https://travis-ci.com/dvsidorov/task_places_remember.svg?branch=master)](https://travis-ci.com/dvsidorov/task_places_remember) [![Coverage Status](https://coveralls.io/repos/github/dvsidorov/task_places_remember/badge.svg?branch=master)](https://coveralls.io/github/dvsidorov/task_places_remember?branch=master)
 
 # Task_places_remember
 he user visits the site and sees a page with a brief description of the service. He also notices the “Login using Facebook” button, clicking on which the FB offers him to allow access to his basic information from the FB.
