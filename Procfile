@@ -1,4 +1,5 @@
 release: rm places_remember/db.sqlite3 && find places_remember/ -path "*/migrations/*.py" -not -name "__init__.py" -delete && find places_remember/ -path "*/migrations/*.pyc"  -delete
-release: PYTHONPATH=$PYTHONPATH:/app/places_remember/
+release: export PYTHONPATH=$PYTHONPATH:/app/places_remember/
 release: python places_remember/manage.py makemigrations layer_model && python places_remember/manage.py migrate
+release: python places_remember/manage.py collectstatic
 web: gunicorn places_remember.config.wsgi --log-file -

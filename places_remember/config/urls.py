@@ -21,7 +21,3 @@ from django.conf.urls import url, include
 urlpatterns = [
     url(r'', include('layer_front.urls'))
 ]
-
-
-# handler404 = View404.as_view()
-# handler500 = View500.as_view()

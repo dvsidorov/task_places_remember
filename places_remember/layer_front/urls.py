@@ -34,5 +34,3 @@ urlpatterns = [
     url(r'^$', PlaceListView.as_view(), name='place_list'),
     url(r'', include('social_django.urls', namespace='social')),
 ]
-
-
