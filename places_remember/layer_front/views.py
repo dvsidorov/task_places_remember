@@ -6,6 +6,7 @@ import json
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponseRedirect, redirect
+from leon_base.site.views import Front404View, Front500View
 from leon_base.base.views import BaseView
 from layer_front.forms import PlaceForm
 from layer_business.places import PlacesBL
@@ -285,3 +286,11 @@ class LogoutView(BaseView):
     def get(self, *args, **kwargs):
         self._clean_session()
         return redirect('place_list')
+
+
+class View404(Front404View):
+    pass
+
+
+class View500(Front500View):
+    pass
